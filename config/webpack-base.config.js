@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const { VueLoaderPlugin } = require("vue-loader");
+
 module.exports = {
   entry: {
     app: path.resolve(__dirname, '../src/app.ts'),
@@ -9,13 +11,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        enforce: 'pre',
-        loader: 'tslint-loader',
-        options: {},
-      },
-      {
-        test: /\.tsx?$/,
+        test: /\.(ts|tsx)$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
@@ -36,16 +32,28 @@ module.exports = {
           limit: 8192,
         },
       },
+      {
+        test: /\.(css|s[ac]ss)$/i,
+        use: [
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
     ],
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      vue: "@vue/runtime-dom",
     },
     extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
+
+    new VueLoaderPlugin(),
+    new webpack.optimize.SplitChunksPlugin({
       name: 'vendor',
     }),
   ],

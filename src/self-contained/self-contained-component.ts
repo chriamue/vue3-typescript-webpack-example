@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue } from 'vue-class-component';
 
 const NAME_REGEX = /^[A-Za-z\s]+$/;
 const EMAIL_REGEX = /^\S+@\S+$/;
@@ -7,7 +6,6 @@ const EMAIL_REGEX = /^\S+@\S+$/;
 /**
  * The class definition of the self-contained component.
  */
-@Component
 export default class SelfContainedComponent extends Vue {
   /**
    * The fields 'name' and 'email' are data properties which can be accessed in the template and bound as model.
